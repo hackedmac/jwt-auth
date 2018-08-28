@@ -395,9 +395,9 @@ class JWT
      *
      * @return \Tymon\JWTAuth\Blacklist
      */
-    public function blacklist()
+    public function whitelist()
     {
-        return $this->manager->getBlacklist();
+        return $this->manager->getWhitelist();
     }
 
     /**

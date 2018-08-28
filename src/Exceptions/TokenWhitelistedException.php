@@ -11,7 +11,7 @@
 
 namespace Tymon\JWTAuth\Exceptions;
 
-class TokenBlacklistedException extends TokenInvalidException
+class TokenWhitelistedException extends TokenInvalidException
 {
     //
 }

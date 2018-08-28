@@ -17,7 +17,7 @@ use Tymon\JWTAuth\Factory;
 use Tymon\JWTAuth\JWTAuth;
 use Tymon\JWTAuth\Manager;
 use Tymon\JWTAuth\JWTGuard;
-use Tymon\JWTAuth\Blacklist;
+use Tymon\JWTAuth\Whitelist;
 use Lcobucci\JWT\Parser as JWTParser;
 use Tymon\JWTAuth\Http\Parser\Parser;
 use Tymon\JWTAuth\Http\Parser\Cookies;
@@ -73,7 +73,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
         $this->registerJWTProvider();
         $this->registerAuthProvider();
         $this->registerStorageProvider();
-        $this->registerJWTBlacklist();
+        $this->registerJWTWhitelist();
 
         $this->registerManager();
         $this->registerTokenParser();
@@ -123,7 +123,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
         $this->app->alias('tymon.jwt.provider.auth', Auth::class);
         $this->app->alias('tymon.jwt.provider.storage', Storage::class);
         $this->app->alias('tymon.jwt.manager', Manager::class);
-        $this->app->alias('tymon.jwt.blacklist', Blacklist::class);
+        $this->app->alias('tymon.jwt.whitelist', Whitelist::class);
         $this->app->alias('tymon.jwt.payload.factory', Factory::class);
         $this->app->alias('tymon.jwt.validators.payload', PayloadValidator::class);
     }
@@ -212,12 +212,11 @@ abstract class AbstractServiceProvider extends ServiceProvider
         $this->app->singleton('tymon.jwt.manager', function ($app) {
             $instance = new Manager(
                 $app['tymon.jwt.provider.jwt'],
-                $app['tymon.jwt.blacklist'],
+                $app['tymon.jwt.whitelist'],
                 $app['tymon.jwt.payload.factory']
             );
 
-            return $instance->setBlacklistEnabled((bool) $this->config('blacklist_enabled'))
-                            ->setPersistentClaims($this->config('persistent_claims'));
+            return $instance->setPersistentClaims($this->config('persistent_claims'));
         });
     }
 
@@ -278,16 +277,16 @@ abstract class AbstractServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the bindings for the Blacklist.
+     * Register the bindings for the whitelist.
      *
      * @return void
      */
-    protected function registerJWTBlacklist()
+    protected function registerJWTWhitelist()
     {
-        $this->app->singleton('tymon.jwt.blacklist', function ($app) {
-            $instance = new Blacklist($app['tymon.jwt.provider.storage']);
+        $this->app->singleton('tymon.jwt.whitelist', function ($app) {
+            $instance = new Whitelist($app['tymon.jwt.provider.storage']);
 
-            return $instance->setGracePeriod($this->config('blacklist_grace_period'))
+            return $instance->setGracePeriod($this->config('whitelist_grace_period'))
                             ->setRefreshTTL($this->config('refresh_ttl'));
         });
     }
