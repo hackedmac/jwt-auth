@@ -1,4 +1,8 @@
 /vendor
+/.idea
 composer.lock
 build
 coverage.xml
+.DS_Store
+.idea/php.xml
+.idea/vcs.xml
