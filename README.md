@@ -9,6 +9,8 @@
 [![Dependency Status](https://www.versioneye.com/php/tymon:jwt-auth/dev-develop/badge?style=flat-square)](https://www.versioneye.com/php/tymon:jwt-auth/dev-develop)
 [![PHP-Eye](https://php-eye.com/badge/tymon/jwt-auth/tested.svg?style=flat-square)](https://php-eye.com/package/tymon/jwt-auth)
 
+## whitelist special
+
 ## Documentation
 
 For version `0.5.*` See the [WIKI](https://github.com/tymondesigns/jwt-auth/wiki) for documentation.
